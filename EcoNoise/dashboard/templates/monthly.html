@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>EcoNoise — Monthly Analytics</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">EcoNoise</div>
+    <nav class="topnav"><a href="/">Dashboard</a><a href="/monthly">Monthly</a></nav>
+  </header>
+
+  <main class="container">
+    <div class="card">
+      <h3>Monthly Harm Rate (daily average)</h3>
+      <canvas id="harmChart" height="120"></canvas>
+    </div>
+
+    <div class="card" style="margin-top:18px;">
+      <h3>Sound Class Distribution</h3>
+      <canvas id="soundPie" height="80"></canvas>
+    </div>
+  </main>
+
+  <script>
+    async function loadMonthly(){
+      const res = await fetch('/api/monthly?_=' + Date.now());
+      const json = await res.json();
+      const daily = json.daily || [];
+      const labels = daily.map(d => d.date);
+      const data = daily.map(d => d.avg_harm);
+
+      // Harm chart (line)
+      const ctx = document.getElementById('harmChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Avg Harm Rate',
+            data: data,
+            borderColor: '#00C3FF',
+            backgroundColor: 'rgba(0,195,255,0.08)',
+            fill: true,
+            tension: 0.3
+          }]
+        },
+        options: {
+          scales: { y: { beginAtZero: true } }
+        }
+      });
+
+      // Sound pie
+      const sc = json.sound_counts || {};
+      const pieLabels = Object.keys(sc);
+      const pieData = Object.values(sc);
+      const ctx2 = document.getElementById('soundPie').getContext('2d');
+      new Chart(ctx2, {
+        type: 'pie',
+        data: {
+          labels: pieLabels,
+          datasets: [{
+            data: pieData,
+            backgroundColor: ['#2AF5EE','#00C3FF','#FF8A65','#FFD54F','#9CCC65']
+          }]
+        }
+      });
+    }
+
+    loadMonthly();
+  </script>
+</body>
+</html>

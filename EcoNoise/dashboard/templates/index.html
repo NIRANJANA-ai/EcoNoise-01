@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EcoNoise Dashboard</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+    <div class="logo">EcoNoise</div>
+    <nav>
+        <a href="/">Dashboard</a>
+        <a href="/map">Map</a>
+        <a href="/rankings">Rankings</a>
+        <a href="/reports">Reports</a>
+        <a href="/monthly">Monthly</a>
+    </nav>
+</header>
+
+<div class="main-grid">
+
+    <!-- LEFT: MAP -->
+    <div class="card map-card">
+        <h3>Live Noise Heatmap</h3>
+        <iframe id="live-map" src="/map_content"></iframe>
+
+        <div class="download-row">
+            <a class="btn" href="/download/csv">Download CSV</a>
+            <a class="btn" href="/download/pdf">Download PDF</a>
+        </div>
+    </div>
+
+    <!-- RIGHT: RANKINGS -->
+    <div class="card right-card">
+        <h3>Harm Rate Rankings</h3>
+        <ul id="rank-list"></ul>
+    </div>
+
+
+
+</div>
+
+<!-- SNAPSHOT PANEL -->
+<div class="card snapshot">
+    <h3>Real-Time Monitoring</h3>
+
+    <p><strong>Location:</strong> <span id="snap-location"></span></p>
+    <p><strong>Sound Class:</strong> <span id="snap-sound"></span></p>
+    <p><strong>Confidence:</strong> <span id="snap-conf"></span></p>
+    <p><strong>Harm Rate:</strong> <span id="snap-harm"></span></p>
+    <p><strong>Last Update:</strong> <span id="snap-time"></span></p>
+    <p><strong>Total Cycles:</strong> <span id="snap-total"></span></p>
+</div>
+
+<script src="/static/js/main.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,9 @@
+{
+  "Location": "Central_Park",
+  "Timestamp": "2025-11-30 17:09:47",
+  "Predicted Class": "silence",
+  "Confidence": 1.0,
+  "Harm Rate": 0.0,
+  "cycle": 4,
+  "total_cycles": 4
+}
